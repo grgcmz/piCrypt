@@ -1,6 +1,8 @@
+import logging
 import os
 import subprocess
 
+logger = logging.getLogger('usb')
 usb_device = '/dev/sda1'  # Update this with the correct device name
 usb_mount_point = '/mnt/usb'
 
@@ -16,17 +18,17 @@ if not mounted:
     mount_result = subprocess.run(['sudo', 'mount', usb_device, usb_mount_point], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
     if mount_result.returncode == 0:
-        print("USB Stick mounted successfully.")
+        logger.info("USB Stick mounted successfully.")
     else:
-        print("Failed to mount USB Stick.")
-        print(mount_result.stderr.decode('utf-8'))
+        logger.error(f"Failed to mount USB Stick.\n{mount_result.stderr.decode('utf-8')}")
+        # print(mount_result.stderr.decode('utf-8'))
 else:
-    print("USB Stick is already mounted.")
+    logger.info("USB Stick is already mounted.")
 
 # List the contents of the USB stick
 usb_contents = os.listdir(usb_mount_point)
 
 # Print the contents
-print("Contents of USB Stick:")
+logger.info("Contents of USB Stick:")
 for item in usb_contents:
-    print(item)
+    logger.info(item)
