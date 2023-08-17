@@ -5,7 +5,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 import os
 import logging
 
-logger = logging.getLogger('root')
+logger = logging.getLogger('enigma')
 
 def generate_private_key():
     # Generate a random key pair
